@@ -1,302 +1,173 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="pragma" content="no-cache" />
-        <!-- キャッシュさせない設定 -->
-        <meta name="expires" content="0" />
-        <!-- キャッシュさせない設定 -->
-        <meta http-equiv="cache-control" content="no-cache, no-store" />
-        <!-- キャッシュさせない設定 -->
-        <meta name="robots" content="noindex" />
-        <!-- インデックスさせない設定 -->
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>かんたん勤怠-申請｜NAVver20240508</title>
-        <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            rossorigin="anonymous"
-        />
-        <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css"
-        />
-        <base target="_top" />
-    </head>
-    <body onLoad="setTimeout('closewindow()', 300000)">
-        <form class="mx-auto">
-            <div
-                class="custom-input"
-                style="
-                    margin: 10px 10px;
-                    padding: 20px;
-                    background-color: #ffffff;
-                "
-            >
-                <h1 style="font-size: 24px">申請</h1>
-                <div style="margin: 10px auto 30px auto">
-                    <div
-                        style="
-                            display: flex;
-                            padding: 5px;
-                            font-size: 24px;
-                            align-items: center;
-                            flex-direction: column;
-                        "
-                    >
-                        <p
-                            style="
-                                color: rgb(0, 0, 0);
-                                font-size: 24px;
-                                margin: 5px auto;
-                                text-align: left;
-                                width: 100%;
-                            "
-                        >
-                            区分
-                        </p>
-                        <select
-                            id="category"
-                            name="category"
-                            style="
-                                width: 100%;
-                                height: 60px;
-                                padding: 5px;
-                                font-size: 24px;
-                            "
-                            required
-                        >
-                            <option value="有給(午前)">有給(午前)</option>
-                            <option value="有給(午後)">有給(午後)</option>
-                            <option value="有給(終日)">有給(終日)</option>
-                        </select>
-                    </div>
-                    <div
-                        style="
-                            display: flex;
-                            padding: 5px;
-                            font-size: 24px;
-                            align-items: left;
-                            flex-direction: column;
-                        "
-                    >
-                        <p
-                            style="
-                                color: rgb(0, 0, 0);
-                                font-size: 24px;
-                                margin: 5px auto;
-                                text-align: left;
-                                width: 100%;
-                            "
-                        >
-                            対象日
-                        </p>
-                        <input
-                            type="date"
-                            id="selected_date"
-                            name="selected_date"
-                            style="
-                                width: 100%;
-                                height: 60px;
-                                padding: 5px;
-                                font-size: 24px;
-                            "
-                            required
-                        />
-                    </div>
+<head>
+    <meta http-equiv="pragma" content="no-cache"> <!-- キャッシュさせない設定 -->
+    <meta name="expires" content="0"> <!-- キャッシュさせない設定 -->
+    <meta http-equiv="cache-control" content="no-cache, no-store"> <!-- キャッシュさせない設定 -->
+    <meta name="robots" content="noindex"> <!-- インデックスさせない設定 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>かんたん勤怠-申請｜業務委託用テスト環境ver20240430</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <base target="_top">
+</head>
+<body onLoad="setTimeout('closewindow()', 300000)">
+
+    <form class="mx-auto">
+        <div class="custom-input" style="margin:10px 10px; padding:20px; background-color: #ffffff;">
+            <h1 style="font-size:24px;">申請</h1>
+            <div style="margin:10px auto 30px auto;">
+                <div style="display: flex; padding:5px; font-size:24px; align-items:center; flex-direction:column;">
+                    <p style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">区分</p>
+                    <select id="category" name="category" style="width:100%; height:60px; padding:5px; font-size:24px;" required>
+                        <option value="有給(午前)">有給(午前)</option>
+                        <option value="有給(午後)">有給(午後)</option>
+                        <option value="有給(終日)">有給(終日)</option>
+                    </select>
                 </div>
-                <button
-                    type="button"
-                    id="submit-button"
-                    style="
-                        color: white;
-                        background-color: rgb(255, 100, 100);
-                        font-weight: 900;
-                        font-size: 24px;
-                        width: 100%;
-                        height: 100px;
-                        margin-bottom: 15px;
-                        border: none;
-                        border-radius: 10px;
-                        box-shadow: 0px 10px rgb(200, 0, 0);
-                    "
-                >
-                    申請する
-                </button>
-            </div>
-        </form>
+                <div style="display: flex; padding:5px; font-size:24px; align-items:left; flex-direction:column;">
+                    <p style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">対象日</p>
+                    <input type="date" id="selected_date" name="selected_date" style="width:100%; height:60px; padding:5px; font-size:24px;" required>
+              </div>
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            crossorigin="anonymous"
-        ></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <!--サーバーの時刻取得用-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/ja.min.js"></script>
-        <script
-            charset="utf-8"
-            src="https://static.line-scdn.net/liff/edge/2/sdk.js"
-        ></script>
+              </div>
+            <button type="button" id="submit-button" style="color: white; background-color: rgb(255, 100, 100); font-weight:900; font-size: 24px; width: 100%; height: 100px; margin-bottom:15px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(200, 0, 0);">申請する</button>
+        </div>
+    </form>
 
-        <script>
-            //参考URL https://qiita.com/doikatsuyuki/items/7ee2476977e8bb97e2a7
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!--サーバーの時刻取得用-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/ja.min.js"></script>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
-            const liffId = "2004762752-OKLNqG6y"; ////LIFF ID(LINEログイン>LIFF>LIFF ID)
+    <script>
+        //参考URL https://qiita.com/doikatsuyuki/items/7ee2476977e8bb97e2a7
 
-            const thisfileURL = location.pathname;
+        const liffId = "2004762752-OKLNqG6y"; ////LIFF ID(LINEログイン>LIFF>LIFF ID)
 
-            $(document).ready(function () {
-                initializeLiff(liffId);
+        const thisfileURL = location.pathname;
+
+        $(document).ready(function () {
+            initializeLiff(liffId);
+        });
+
+        function initializeLiff(liffId) {
+            liff.init({
+                liffId: liffId
+            }).then(() => {
+                initializeApp();
+            }).catch((error) => {
+                console.log('LIFF Initialization failed ', error);
+                window.alert('エラーが発生しました。お手数おかけしますが画面を閉じて再実行してください。');
+                sendErrorLog('LIFF-InitializationError:' + error.message, thisfileURL, error.lineNumber, error.columnNumber, error);
             });
+        };
 
-            function initializeLiff(liffId) {
-                liff.init({
-                    liffId: liffId,
-                })
-                    .then(() => {
-                        initializeApp();
-                    })
-                    .catch((error) => {
-                        console.log("LIFF Initialization failed ", error);
-                        window.alert(
-                            "エラーが発生しました。お手数おかけしますが画面を閉じて再実行してください。"
-                        );
-                        sendErrorLog(
-                            "LIFF-InitializationError:" + error.message,
-                            thisfileURL,
-                            error.lineNumber,
-                            error.columnNumber,
-                            error
-                        );
-                    });
-            }
-
-            function initializeApp() {
-                // ログインチェック
-                if (liff.isLoggedIn()) {
-                    //ログイン済
-                    // axios.head(window.location.href) //サーバーの現在時刻を取得
-                    // .then(res => {
-                    //     const now = new Date(res.headers.date); // サーバー時刻
-                    //     const nowDate = moment(now, 'YYYY-MM-DD'); //moment.jsを使用して日付表示形式をフォーマット
-                    //     $('input[name="vacationDate"]').val(now);
-                    // })
-                } else {
-                    // 未ログイン
-                    let result = window.confirm("LINEにログインしてください");
-                    if (result) {
-                        liff.login();
-                    }
+        function initializeApp() {
+        // ログインチェック
+            if (liff.isLoggedIn()) {
+                //ログイン済
+                // axios.head(window.location.href) //サーバーの現在時刻を取得
+                // .then(res => {
+                //     const now = new Date(res.headers.date); // サーバー時刻
+                //     const nowDate = moment(now, 'YYYY-MM-DD'); //moment.jsを使用して日付表示形式をフォーマット
+                //     $('input[name="vacationDate"]').val(now);
+                // })
+            } else {
+                // 未ログイン
+                let result = window.confirm("LINEにログインしてください");
+                if(result) {
+                    liff.login();
                 }
             }
+        }
 
-            const params = new URL(document.location).searchParams;
-            const key = params.get("key");
+        const params = (new URL(document.location)).searchParams;
+        const key = params.get('key');
 
-            $(function () {
-                $("#submit-button").on("click", function () {
-                    $("form").submit();
-                });
+        $(function() {
+            $('#submit-button').on('click',function(){
+                $('form').submit();
             });
+        });
 
-            $(function () {
-                $("form").submit(function () {
-                    initializeLiff(liffId); //送信ボタンを押したときに再度Liffを設定する
-                    const category = $("#category").val();
-                    const count = $("#count").val();
-                    const date = $("#selected_date").val();
-                    const dateFormated = moment(date).format("YYYY/MM/DD(ddd)");
-                    const msg = `**申請完了**\n区分:${category}\n対象日:${dateFormated}`;
-                    sendText(msg);
-                    return false;
-                });
+        $(function () {
+            $('form').submit(function () {
+                initializeLiff(liffId); //送信ボタンを押したときに再度Liffを設定する
+                const category = $('#category').val();
+                const count = $('#count').val();
+                const date = $('#selected_date').val();
+                const dateFormated = moment(date).format('YYYY/MM/DD(ddd)');
+                const msg = `**申請完了**\n区分:${category}\n対象日:${dateFormated}`;
+                sendText(msg);
+                return false;
             });
+        });
 
-            function sendText(text) {
-                liff.sendMessages([
-                    {
-                        type: "text",
-                        text: text,
-                    },
-                ])
-                    .then(() => {
-                        liff.closeWindow();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        window.alert(
-                            "エラーが発生しました。お手数おかけしますが画面を閉じて再実行してください。"
-                        );
-                        sendErrorLog(
-                            "SendText Error:" + error.message,
-                            thisfileURL,
-                            error.lineNumber,
-                            error.columnNumber,
-                            error
-                        );
-                    });
-            }
+        function sendText(text){
+            liff.sendMessages([
+                {
+                    'type' : 'text',
+                    'text' : text,
+                },
+            ])
+            .then(() =>{
+                liff.closeWindow();
+            }).catch((error)=>{
+                console.log(error);
+                window.alert('エラーが発生しました。お手数おかけしますが画面を閉じて再実行してください。');
+                sendErrorLog('SendText Error:'+ error.message, thisfileURL, error.lineNumber, error.columnNumber, error);
+            });
+        }
 
-            function sendErrorLog(message, source, lineNo, colNo, error) {
-                // エラー情報をサーバーサイドに送信する
+        function sendErrorLog(message, source, lineNo, colNo, error){
+            // エラー情報をサーバーサイドに送信する
 
-                let errorData = {
-                    message: message,
-                    source: source,
-                    lineno: lineNo,
-                    colno: colNo,
-                    error: error ? error.stack : null,
-                };
-
-                console.log(errorData);
-
-                // Fetch APIを使用してサーバーサイドにデータを送信
-                fetch("/line_kintai/logging.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(errorData),
-                })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error(
-                                "Failed to log error on the server"
-                            );
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error logging on the server:", error);
-                    });
-
-                // オリジナルのエラー処理は実行されないようにする
-                return true;
-            }
-
-            window.onerror = (message, source, lineNo, colNo, error) => {
-                sendErrorLog(
-                    "LoadingError:" + message,
-                    thisfileURL,
-                    lineNo,
-                    colNo,
-                    error
-                );
+            let errorData = {
+                message: message,
+                source: source,
+                lineno: lineNo,
+                colno: colNo,
+                error: error? error.stack : null
             };
 
-            function closewindow() {
-                liff.closeWindow();
-            }
-        </script>
-    </body>
+            console.log(errorData);
+
+            // Fetch APIを使用してサーバーサイドにデータを送信
+            fetch('/line_kintai/logging.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(errorData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Failed to log error on the server');
+                }
+            })
+            .catch(error => {
+                console.error('Error logging on the server:', error);
+            });
+
+            // オリジナルのエラー処理は実行されないようにする
+            return true;
+        };
+
+        window.onerror = (message, source, lineNo, colNo, error) => {
+            sendErrorLog('LoadingError:' + message, thisfileURL, lineNo, colNo, error);
+        };
+
+        function closewindow(){
+            liff.closeWindow();
+        }
+
+    </script>
+</body>
 </html>
