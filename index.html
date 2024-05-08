@@ -1,369 +1,287 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="pragma" content="no-cache" />
-        <!-- キャッシュさせない設定 -->
-        <meta name="expires" content="0" />
-        <!-- キャッシュさせない設定 -->
-        <meta http-equiv="cache-control" content="no-cache, no-store" />
-        <!-- キャッシュさせない設定 -->
-        <meta name="robots" content="noindex" />
-        <!-- インデックスさせない設定 -->
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>かんたん勤怠｜日本母乳バンク協会ver20240508</title>
-        <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-            rossorigin="anonymous"
-        />
-        <link
-            rel="stylesheet"
-            href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-        />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css"
-        />
-        <base target="_top" />
-    </head>
-    <body onLoad="setTimeout('closewindow()', 300000)">
-        <form class="mx-auto">
-            <div class="" style="display: flex; flex-direction: column">
-                <!-- <div style="display: flex;">
+<head>
+    <meta http-equiv="pragma" content="no-cache"> <!-- キャッシュさせない設定 -->
+    <meta name="expires" content="0"> <!-- キャッシュさせない設定 -->
+    <meta http-equiv="cache-control" content="no-cache, no-store"> <!-- キャッシュさせない設定 -->
+    <meta name="robots" content="noindex"> <!-- インデックスさせない設定 -->
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>かんたん勤怠｜日本母乳バンク協会ver20240508</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
+    <base target="_top">
+</head>
+<body onLoad="setTimeout('closewindow()', 300000)">
+
+    <form class="mx-auto">
+        <div class="" style="display: flex; flex-direction: column;">
+            <!-- <div style="display: flex;">
                 <button type="button" id="clock-in-button" style="color: white; background-color: rgb(255, 100, 100); font-weight:900; font-size: 24px; width: 60%; height: 200px; margin:5px 2.5px 15px 0px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(200, 0, 0);">通常出勤</button>
                 <button type="button" id="ouen-clock-in-button" style="color: white; background-color: rgb(255, 120, 0); font-weight:900; font-size: 24px; width: 40%; height: 200px; margin:5px 0px 15px 2.5px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(180, 50, 0);">応援出勤</button>
             </div> -->
-                <button
-                    type="button"
-                    id="clock-in-button"
-                    style="
-                        color: white;
-                        background-color: rgb(255, 100, 100);
-                        font-weight: 900;
-                        font-size: 48px;
-                        height: 150px;
-                        margin: 5px 5px 15px 5px;
-                        border: none;
-                        border-radius: 10px;
-                        box-shadow: 0px 10px rgb(200, 0, 0);
-                    "
-                >
-                    出勤
-                </button>
-                <button
-                    type="button"
-                    id="clock-out-button"
-                    style="
-                        color: white;
-                        background-color: rgb(110, 110, 110);
-                        font-weight: 900;
-                        font-size: 48px;
-                        height: 150px;
-                        margin: 5px 5px 15px 5px;
-                        border: none;
-                        border-radius: 10px;
-                        box-shadow: 0px 10px rgb(50, 50, 50);
-                    "
-                >
-                    退勤
-                </button>
-            </div>
-            <input type="hidden" name="category" value="" />
-            <input type="hidden" name="userID" value="" />
-        </form>
+            <button type="button" id="clock-in-button" style="color: white; background-color: rgb(255, 100, 100); font-weight:900; font-size: 48px; height: 150px; margin:5px 5px 15px 5px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(200, 0, 0);">出勤</button>
+            <button type="button" id="clock-out-button" style="color: white; background-color: rgb(110, 110, 110); font-weight:900; font-size: 48px; height: 150px; margin:5px 5px 15px 5px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(50, 50, 50);">退勤</button>
+        </div>
+        <input type="hidden" name="category" value="">
+        <input type="hidden" name="userID" value="">
+    </form>
 
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-        <script
-            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-            crossorigin="anonymous"
-        ></script>
-        <script
-            src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-            crossorigin="anonymous"
-        ></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <!--サーバーの時刻取得用-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/ja.min.js"></script>
-        <script
-            charset="utf-8"
-            src="https://static.line-scdn.net/liff/edge/2/sdk.js"
-        ></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script> <!--サーバーの時刻取得用-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/locale/ja.min.js"></script>
+    <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
 
-        <script>
-            //参考URL https://qiita.com/doikatsuyuki/items/7ee2476977e8bb97e2a7
+    <script>
+        //参考URL https://qiita.com/doikatsuyuki/items/7ee2476977e8bb97e2a7
 
-            const liffId = "2004762752-8b0a5klP"; ////LIFF ID(LINEログイン>LIFF>LIFF ID)
+        const liffId = "2004762752-8b0a5klP"; ////LIFF ID(LINEログイン>LIFF>LIFF ID)
 
-            const thisfileURL = location.pathname;
+        const thisfileURL = location.pathname;
 
-            // $(document).ready(function () {
-            //     initializeLiff(liffId);
-            // });
+        // $(document).ready(function () {
+        //     initializeLiff(liffId);
+        // });
 
-            function initializeLiff(liffId) {
-                liff.init({
-                    liffId: liffId,
-                })
-                    .then(() => {
-                        initializeApp();
-                    })
-                    .catch((error) => {
-                        console.log("LIFF Initialization failed ", error);
-                        window.alert(
-                            "エラーが発生しました。お手数おかけしますが画面を閉じて再実行してください。"
-                        );
-                        sendErrorLog(
-                            "LIFF-InitializationError:" + error.message,
-                            thisfileURL,
-                            error.lineNumber,
-                            error.columnNumber,
-                            error
-                        );
-                    });
-            }
+        function initializeLiff(liffId) {
+            liff.init({
+                liffId: liffId
+            }).then(() => {
+                initializeApp();
+            }).catch((error) => {
+                console.log('LIFF Initialization failed ', error);
+                window.alert('エラーが発生しました。お手数おかけしますが画面を閉じて再実行してください。');
+                sendErrorLog('LIFF-InitializationError:' + error.message, thisfileURL, error.lineNumber, error.columnNumber, error);
+            });
+        };
 
-            function initializeApp() {
-                // ログインチェック
-                if (liff.isLoggedIn()) {
-                    //ログイン済
-                    //getLineData();
-                } else {
-                    // 未ログイン
-                    let result = window.confirm("LINEにログインしてください");
-                    if (result) {
-                        liff.login();
-                    }
+        function initializeApp() {
+        // ログインチェック
+            if (liff.isLoggedIn()) {
+                //ログイン済
+                //getLineData();
+            } else {
+                // 未ログイン
+                let result = window.confirm("LINEにログインしてください");
+                if(result) {
+                    liff.login();
                 }
             }
+        }
 
-            //function getLineData() {
-            //    liff.getProfile()
-            //    .then(profile => {
-            // $(function(){
-            //     $('input[name="userID"]').val(profile.userId);
-            //     $('input[name="displayName"]').val(profile.displayName);
-            // });
-            //    })
-            //}
-
-            const params = new URL(document.location).searchParams;
-            const key = params.get("key");
-
-            // $(function() {
-            //     $('#ouen-clock-in-button').on('click',function(){
-            //         $('#custom-input-modal').fadeIn();
-            //     });
-
-            //     $('#cancel-button').on('click',function(){
-            //         $('#custom-input-modal').fadeOut();
-            //         $('input[name="work-place"]').val("");
-            //         $('input[name="unit-price"]').val("");
-            //     });
-
-            // });
-
-            $(function () {
-                $("#clock-in-button").on("click", function () {
-                    $('input[name="category"]').val("出勤");
-                    // $('input[name="custom-category"]').val("通常出勤");
-                    $("form").submit();
-                });
-
-                // $('#ouen-clock-in-submit-button').on('click',function(){
-                //     $('input[name="category"]').val("出勤");
-                //     $('input[name="custom-category"]').val("応援出勤");
-                //     $('form').submit();
+        //function getLineData() {
+        //    liff.getProfile()
+        //    .then(profile => {
+                // $(function(){
+                //     $('input[name="userID"]').val(profile.userId);
+                //     $('input[name="displayName"]').val(profile.displayName);
                 // });
+        //    })
+        //}
 
-                $("#clock-out-button").on("click", function () {
-                    $('input[name="category"]').val("退勤");
-                    // $('input[name="custom-category"]').val("退勤");
-                    $("form").submit();
-                });
+        const params = (new URL(document.location)).searchParams;
+        const key = params.get('key');
+
+        // $(function() {
+        //     $('#ouen-clock-in-button').on('click',function(){
+        //         $('#custom-input-modal').fadeIn();
+        //     });
+
+        //     $('#cancel-button').on('click',function(){
+        //         $('#custom-input-modal').fadeOut();
+        //         $('input[name="work-place"]').val("");
+        //         $('input[name="unit-price"]').val("");
+        //     });
+
+        // });
+
+        $(function() {
+            $('#clock-in-button').on('click',function(){
+                $('input[name="category"]').val("出勤");
+                // $('input[name="custom-category"]').val("通常出勤");
+                $('form').submit();
             });
 
-            $(function () {
-                $("form").submit(function () {
-                    const now = new Date(); // 端末時刻を取得
-                    const nowDateTime = moment(now).format(
-                        "YYYY/MM/DD(ddd) HH:mm"
-                    );
-                    // const year = now.getFullYear();
-                    // const month = now.getMonth() + 1;
-                    // const date = now.getDate();
-                    // const dayArray = ['日','月','火','水','木','金','土'];
-                    // const day = dayArray[now.getDay()];
-                    // const hours = now.getHours();
-                    // const minutes = now.getMinutes();
-                    // const nowDateTime = year + '/' + month + '/' + date + '(' + day + ') ' + hours + ':' + minutes;
-
-                    //const userID = $('input[name="userID"]').val();
-                    //const displayName = $('input[name="displayName"]').val();
-                    // const customCategory = $('input[name="custom-category"]').val();
-                    const category = $('input[name="category"]').val();
-                    // const unitPrice  = $('input[name="unit-price"]').val();
-
-                    const msg = `**打刻完了**\n区分:${category}\n時刻:${nowDateTime}`;
-                    sendText(msg);
-                });
-            });
-
-            // $(function () {
-            //     $('form').submit(function () {
-            //         //const userID = $('input[name="userID"]').val();
-            //         //const displayName = $('input[name="displayName"]').val();
-            //         const customCategory = $('input[name="custom-category"]').val();
-            //         const category = $('input[name="category"]').val();
-            //         const workPlace  = $('input[name="work-place"]').val();
-            //         const unitPrice  = $('input[name="unit-price"]').val();
-
-            //         getGeoLocation()
-            //         .then((position)=>{
-            //             const latitude = position.coords.latitude; //緯度
-            //             const longitude = position.coords.longitude; //経度
-            //             var url = 'https://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x='+longitude+'&y='+latitude;
-            //             return url;
-            //         })
-            //         .then((url) => fetch(url, {method:'GET'}))
-            //         .then((response) => response.json())
-            //         .then((json) =>{
-            //             const location = json.response.location[0];
-            //             const prefecture = location.prefecture;
-            //             const city = location.city;
-            //             const town = location.town;
-            //             const address = prefecture + city + town;
-            //             const msg = `**打刻完了**\n区分:${customCategory}\n${address}\n(応援)勤務地:${workPlace}\n(応援)単価:${unitPrice}`;
-            //             sendText(msg);
-            //         })
-            //         .catch((error)=>{ //失敗時
-            //             alert(error);
-            //             const latitude = 0; //緯度
-            //             const longitude = 0; //経度
-            //             const address = '-';
-            //             const msg = `**打刻完了**\n区分:${customCategory}\n${address}\n(応援)勤務地:${workPlace}\n(応援)単価:${unitPrice}`;
-            //             sendText(msg);
-            //         });
-
-            //         return false;
-            //     });
+            // $('#ouen-clock-in-submit-button').on('click',function(){
+            //     $('input[name="category"]').val("出勤");
+            //     $('input[name="custom-category"]').val("応援出勤");
+            //     $('form').submit();
             // });
 
-            // function getGeoLocation(){
-            //     return new Promise((resolve, reject)=>{
-            //         navigator.geolocation.getCurrentPosition(
-            //             function(position){
-            //                 resolve(position);
-            //             },
-            //             function(error){
-            //                 reject(error);
-            //             },
-            //             {
-            //                 "enableHighAccuracy": true ,
-            //                 "timeout": 8000 ,
-            //                 "maximumAge": 5000 ,
-            //             }
-            //         );
-            //     });
-            // }
+            $('#clock-out-button').on('click',function(){
+                $('input[name="category"]').val("退勤");
+                // $('input[name="custom-category"]').val("退勤");
+                $('form').submit();
+            });
+        });
 
-            // function convertAddress(latitude,longitude){
-            //     var url = 'http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x='+longitude+'&y='+latitude;
-            //     fetch(url).then(response => {
-            //         return response.json();
-            //     })
-            //     .then((data)=>{
-            //         var location = data.response.location[0];
-            //         var prefecture = location.prefecture;
-            //         var city = location.city;
-            //         var town = location.town;
-            //         var address = prefecture + city + town;
-            //         return address;
-            //     })
-            //     .catch((err)=>{
-            //         alert(err);
-            //     });
-            // };
 
-            function sendText(text) {
-                initializeLiff(liffId);
-                liff.ready.then(() => {
-                    liff.sendMessages([
-                        {
-                            type: "text",
-                            text: text,
-                        },
-                    ])
-                        .then(() => {
-                            liff.closeWindow();
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            window.alert(
-                                "エラーが発生しました。お手数おかけしますが画面を閉じて再実行してください。"
-                            );
-                            sendErrorLog(
-                                "SendText Error:" + error.message,
-                                thisfileURL,
-                                error.lineNumber,
-                                error.columnNumber,
-                                error
-                            );
-                        });
-                });
-            }
+        $(function () {
+            $('form').submit(function () {
+                const now = new Date(); // 端末時刻を取得
+                const nowDateTime = moment(now).format('YYYY/MM/DD(ddd) HH:mm');
+                // const year = now.getFullYear();
+                // const month = now.getMonth() + 1;
+                // const date = now.getDate();
+                // const dayArray = ['日','月','火','水','木','金','土'];
+                // const day = dayArray[now.getDay()];
+                // const hours = now.getHours();
+                // const minutes = now.getMinutes();
+                // const nowDateTime = year + '/' + month + '/' + date + '(' + day + ') ' + hours + ':' + minutes;
 
-            function sendErrorLog(message, source, lineNo, colNo, error) {
-                // エラー情報をサーバーサイドに送信する
+                //const userID = $('input[name="userID"]').val();
+                //const displayName = $('input[name="displayName"]').val();
+                // const customCategory = $('input[name="custom-category"]').val();
+                const category = $('input[name="category"]').val();
+                // const unitPrice  = $('input[name="unit-price"]').val();
 
-                let errorData = {
-                    message: message,
-                    source: source,
-                    lineno: lineNo,
-                    colno: colNo,
-                    error: error ? error.stack : null,
-                };
+                const msg = `**打刻完了**\n区分:${category}\n時刻:${nowDateTime}`;
+                sendText(msg);
+            });
+        });
 
-                console.log(errorData);
+        // $(function () {
+        //     $('form').submit(function () {
+        //         //const userID = $('input[name="userID"]').val();
+        //         //const displayName = $('input[name="displayName"]').val();
+        //         const customCategory = $('input[name="custom-category"]').val();
+        //         const category = $('input[name="category"]').val();
+        //         const workPlace  = $('input[name="work-place"]').val();
+        //         const unitPrice  = $('input[name="unit-price"]').val();
 
-                // Fetch APIを使用してサーバーサイドにデータを送信
-                fetch("/line_kintai/logging.php", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
+        //         getGeoLocation()
+        //         .then((position)=>{
+        //             const latitude = position.coords.latitude; //緯度
+        //             const longitude = position.coords.longitude; //経度
+        //             var url = 'https://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x='+longitude+'&y='+latitude;
+        //             return url;
+        //         })
+        //         .then((url) => fetch(url, {method:'GET'}))
+        //         .then((response) => response.json())
+        //         .then((json) =>{
+        //             const location = json.response.location[0];
+        //             const prefecture = location.prefecture;
+        //             const city = location.city;
+        //             const town = location.town;
+        //             const address = prefecture + city + town;
+        //             const msg = `**打刻完了**\n区分:${customCategory}\n${address}\n(応援)勤務地:${workPlace}\n(応援)単価:${unitPrice}`;
+        //             sendText(msg);
+        //         })
+        //         .catch((error)=>{ //失敗時
+        //             alert(error);
+        //             const latitude = 0; //緯度
+        //             const longitude = 0; //経度
+        //             const address = '-';
+        //             const msg = `**打刻完了**\n区分:${customCategory}\n${address}\n(応援)勤務地:${workPlace}\n(応援)単価:${unitPrice}`;
+        //             sendText(msg);
+        //         });
+
+        //         return false;
+        //     });
+        // });
+
+        // function getGeoLocation(){
+        //     return new Promise((resolve, reject)=>{
+        //         navigator.geolocation.getCurrentPosition(
+        //             function(position){
+        //                 resolve(position);
+        //             },
+        //             function(error){
+        //                 reject(error);
+        //             },
+        //             {
+        //                 "enableHighAccuracy": true ,
+        //                 "timeout": 8000 ,
+        //                 "maximumAge": 5000 ,
+        //             }
+        //         );
+        //     });
+        // }
+
+        // function convertAddress(latitude,longitude){
+        //     var url = 'http://geoapi.heartrails.com/api/json?method=searchByGeoLocation&x='+longitude+'&y='+latitude;
+        //     fetch(url).then(response => {
+        //         return response.json();
+        //     })
+        //     .then((data)=>{
+        //         var location = data.response.location[0];
+        //         var prefecture = location.prefecture;
+        //         var city = location.city;
+        //         var town = location.town;
+        //         var address = prefecture + city + town;
+        //         return address;
+        //     })
+        //     .catch((err)=>{
+        //         alert(err);
+        //     });
+        // };
+
+        function sendText(text){
+            initializeLiff(liffId);
+            liff.ready.then(() => {
+                liff.sendMessages([
+                    {
+                        'type' : 'text',
+                        'text' : text,
                     },
-                    body: JSON.stringify(errorData),
-                })
-                    .then((response) => {
-                        if (!response.ok) {
-                            throw new Error(
-                                "Failed to log error on the server"
-                            );
-                        }
-                    })
-                    .catch((error) => {
-                        console.error("Error logging on the server:", error);
-                    });
+                ])
+                .then(() =>{
+                    liff.closeWindow();
+                }).catch((error)=>{
+                    console.log(error);
+                    window.alert('エラーが発生しました。お手数おかけしますが画面を閉じて再実行してください。');
+                    sendErrorLog('SendText Error:'+ error.message, thisfileURL, error.lineNumber, error.columnNumber, error);
+                });
+            });
+        }
 
-                // オリジナルのエラー処理は実行されないようにする
-                return true;
-            }
+        function sendErrorLog(message, source, lineNo, colNo, error){
+            // エラー情報をサーバーサイドに送信する
 
-            function closewindow() {
-                liff.closeWindow();
-            }
-
-            window.onerror = (message, source, lineNo, colNo, error) => {
-                sendErrorLog(
-                    "LoadingError:" + message,
-                    thisfileURL,
-                    lineNo,
-                    colNo,
-                    error
-                );
+            let errorData = {
+                message: message,
+                source: source,
+                lineno: lineNo,
+                colno: colNo,
+                error: error? error.stack : null
             };
-        </script>
-    </body>
+
+            console.log(errorData);
+
+            // Fetch APIを使用してサーバーサイドにデータを送信
+            fetch('/line_kintai/logging.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(errorData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                throw new Error('Failed to log error on the server');
+                }
+            })
+            .catch(error => {
+                console.error('Error logging on the server:', error);
+            });
+
+            // オリジナルのエラー処理は実行されないようにする
+            return true;
+        };
+
+        function closewindow(){
+            liff.closeWindow();
+        }
+
+        window.onerror = (message, source, lineNo, colNo, error) => {
+            sendErrorLog('LoadingError:' + message, thisfileURL, lineNo, colNo, error);
+        };
+
+    </script>
+</body>
 </html>
