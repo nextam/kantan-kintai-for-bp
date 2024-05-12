@@ -109,9 +109,14 @@
                 const dateFormated = moment(date).format('YYYY/MM/DD(ddd)');
 
                 let msg = `**申請完了**\n区分:${category}\n対象日:${dateFormated}`;
+                const hour = $('#selected_hour').val()
 
                 if (category == "有給") {
-                    msg += `\n取得時間:${$('#selected_hour').val()}`
+                    if(hour == null || hour == "") {
+                        window.alert("取得時間数（h）を入力してください")
+                        return false
+                    }
+                    msg += `\n取得時間:${hour}`
                 }
 
                 sendText(msg);
