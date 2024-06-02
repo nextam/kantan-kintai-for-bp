@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex"> <!-- インデックスさせない設定 -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>かんたん勤怠｜NAVver20240508</title>
+    <title>かんたん勤怠｜NAVver20240601</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
@@ -21,11 +21,34 @@
                 <button type="button" id="clock-in-button" style="color: white; background-color: rgb(255, 100, 100); font-weight:900; font-size: 24px; width: 60%; height: 200px; margin:5px 2.5px 15px 0px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(200, 0, 0);">通常出勤</button>
                 <button type="button" id="ouen-clock-in-button" style="color: white; background-color: rgb(255, 120, 0); font-weight:900; font-size: 24px; width: 40%; height: 200px; margin:5px 0px 15px 2.5px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(180, 50, 0);">応援出勤</button>
             </div> -->
-            <button type="button" id="clock-in-button" style="color: white; background-color: rgb(255, 100, 100); font-weight:900; font-size: 48px; height: 150px; margin:5px 5px 15px 5px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(200, 0, 0);">出勤</button>
-            <button type="button" id="clock-out-button" style="color: white; background-color: rgb(110, 110, 110); font-weight:900; font-size: 48px; height: 150px; margin:5px 5px 15px 5px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(50, 50, 50);">退勤</button>
+            <p style="color:rgb(0, 0, 0); font-size:16px; margin:5px auto; text-align: left; width:100%;">
+                <input name="clock" type="radio" value="出勤" checked> 出勤
+                <input name="clock" type="radio" value="退勤"> 退勤
+            </p>
+            <p style="color:rgb(0, 0, 0); font-size: 16px; margin:5px auto; text-align: left; width:100%;">
+                <input name="location" type="radio" value="事務所" checked> 事務所
+                <input name="location" type="radio" value="現場"> 現場
+                <input name="location" type="radio" value="現調"> 現調
+                <input name="location" type="radio" value="打合せ"> 打合せ
+                <input name="location" type="radio" value="移動"> 移動
+                <input name="location" type="radio" value="その他"> その他
+            </p>
+            <p id="orp-container" style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">
+                <input id="is-orp" type="checkbox"> ORP案件
+            </p>
+        
+            <div style="display: flex; padding:5px; font-size:24px; align-items:left; flex-direction:column;">
+                <p style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">目的/作業内容</p>
+                <input id="contents" name="contents" style="width:100%; height:60px; padding:5px; font-size:16px;" required>
+            </div>
+
+            <div style="display: flex; padding:5px; font-size:24px; align-items:left; flex-direction:column;">
+                <p style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">明日のスケジュール</p>
+                <input id="schedule" name="schedule" style="width:100%; height:60px; padding:5px; font-size:16px;" required>
+            </div>
+
+            <button type="button" id="submit-button" style="color: white; background-color: rgb(255, 100, 100); font-weight:900; font-size: 24px; width: 100%; height: 100px; margin-top: 15px; margin-bottom:15px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(200, 0, 0)">打刻する</button>
         </div>
-        <input type="hidden" name="category" value="">
-        <input type="hidden" name="userID" value="">
     </form>
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -74,76 +97,70 @@
             }
         }
 
-        //function getLineData() {
-        //    liff.getProfile()
-        //    .then(profile => {
-                // $(function(){
-                //     $('input[name="userID"]').val(profile.userId);
-                //     $('input[name="displayName"]').val(profile.displayName);
-                // });
-        //    })
-        //}
-
         const params = (new URL(document.location)).searchParams;
         const key = params.get('key');
 
-        // $(function() {
-        //     $('#ouen-clock-in-button').on('click',function(){
-        //         $('#custom-input-modal').fadeIn();
-        //     });
+        $('#orp-container').hide();
 
-        //     $('#cancel-button').on('click',function(){
-        //         $('#custom-input-modal').fadeOut();
-        //         $('input[name="work-place"]').val("");
-        //         $('input[name="unit-price"]').val("");
-        //     });
-
-        // });
+        $('input[name="clock"]').change(function(){
+            if ($(this).val() === '退勤') {
+                $('#orp-container').show();
+            } else {
+                $('#orp-container').hide();
+            }
+        });
 
         $(function() {
-            $('#clock-in-button').on('click',function(){
-                $('input[name="category"]').val("出勤");
-                // $('input[name="custom-category"]').val("通常出勤");
-                $('form').submit();
-            });
-
-            // $('#ouen-clock-in-submit-button').on('click',function(){
-            //     $('input[name="category"]').val("出勤");
-            //     $('input[name="custom-category"]').val("応援出勤");
-            //     $('form').submit();
-            // });
-
-            $('#clock-out-button').on('click',function(){
-                $('input[name="category"]').val("退勤");
-                // $('input[name="custom-category"]').val("退勤");
+            $('#submit-button').on('click',function(){
                 $('form').submit();
             });
         });
 
+        $('#contents').focus(function(){
+            $(this).css('border', '1px solid black');
+        });
+
+        $('#schedule').focus(function(){
+            $(this).css('border', '1px solid black');
+        });
 
         $(function () {
             $('form').submit(function () {
                 const now = new Date(); // 端末時刻を取得
                 const nowDateTime = moment(now).format('YYYY/MM/DD(ddd) HH:mm');
-                // const year = now.getFullYear();
-                // const month = now.getMonth() + 1;
-                // const date = now.getDate();
-                // const dayArray = ['日','月','火','水','木','金','土'];
-                // const day = dayArray[now.getDay()];
-                // const hours = now.getHours();
-                // const minutes = now.getMinutes();
-                // const nowDateTime = year + '/' + month + '/' + date + '(' + day + ') ' + hours + ':' + minutes;
+                const clockStatus = $('input[name="clock"]:checked').val()
+                const locationStatus = $('input[name="location"]:checked').val()
+                const contents = $('#contents').val();
+                const schedule = $('#schedule').val();
 
-                //const userID = $('input[name="userID"]').val();
-                //const displayName = $('input[name="displayName"]').val();
-                // const customCategory = $('input[name="custom-category"]').val();
-                const category = $('input[name="category"]').val();
-                // const unitPrice  = $('input[name="unit-price"]').val();
+                let msg = `**打刻完了**\n出勤/退勤:${clockStatus}\n時刻:${nowDateTime}\n区分:${locationStatus}\n目的/作業内容:${contents}\n明日のスケジュール:${schedule}`;
+                    
+                if (inputValidation(contents, schedule)) {
+                    if ($('#is-orp').is(':checked')) {
+                        msg += `\nORP案件`
+                    }
+                } else {
+                    window.alert("未入力の項目があります")
+                    return false
+                }
 
-                const msg = `**打刻完了**\n区分:${category}\n時刻:${nowDateTime}`;
                 sendText(msg);
             });
         });
+
+        function inputValidation(contents, schedule) {
+            let isError = true
+            if (contents == '') {
+                $('#contents').css('border', '1px solid #FF6464');
+                isError = false
+            }
+            if (schedule == '') {
+                $('#schedule').css('border', '1px solid #FF6464');
+                isError = false
+            }
+
+            return isError
+        }
 
         // $(function () {
         //     $('form').submit(function () {

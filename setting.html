@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex"> <!-- インデックスさせない設定 -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>かんたん勤怠-ユーザー登録｜NAVver20240508</title>
+    <title>かんたん勤怠-ユーザー登録｜NAVver20240601</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
@@ -19,10 +19,19 @@
         <div class="custom-input" style="width:100%; margin:5% auto; padding:20px; background-color: #ffffff;">
             <h1 style="font-size:24px;">ユーザー登録</h1>
             <div style="margin:10px auto 30px auto;">
-                <p style="color:rgb(0, 0, 0); font-size:16px; margin:5px auto;">社員番号</p>
-                <input name="employee-id" style="width:100%; height:40px; padding:5px; font-size:16px;" value="">
                 <p style="color:rgb(0, 0, 0); font-size:16px; margin:5px auto;">氏名</p>
                 <input name="username" style="width:100%; height:40px; padding:5px; font-size:16px;" value="">
+                <p style="color:rgb(0, 0, 0); font-size:16px; margin:5px auto;">事業所</p>
+                <select id="office-name" name="office-name" style="width:100%; height:40px; padding:5px; font-size:16px;" required>
+                    <option value="仙台">仙台</option>
+                    <option value="東京">東京</option>
+                    <option value="名古屋">名古屋</option>
+                    <option value="大阪">大阪</option>
+                    <option value="広島">広島</option>
+                    <option value="福岡/沖縄">福岡/沖縄</option>
+                </select>
+                <p style="color:rgb(0, 0, 0); font-size:16px; margin:5px auto;">割当番号</p>
+                <input type="number" name="allocation-id" style="width:100%; height:40px; padding:5px; font-size:16px;" value="">
             </div>
             <button type="button" id="submit-button" style="color: white; background-color: rgb(255, 100, 100); font-weight:900; font-size: 24px; width: 100%; height: 100px; margin-bottom:15px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(200, 0, 0);">登録する</button>
         </div>
@@ -82,13 +91,42 @@
         $(function () {
             $('form').submit(function () {
                 initializeLiff(liffId);//送信ボタンを押したときに再度Liffを設定する
-                const employeeId = $('input[name="employee-id"]').val();
                 const userName = $('input[name="username"]').val();
-                const msg = `**アカウント登録完了**\n社員番号:${employeeId}\n氏名:${userName}`;
-                sendText(msg);
+                const officeName = $('input[name="office-name"]').val();
+                const allocationId = $('input[name="allocation-id"]').val();
+
+                if (inputValidation(userName, allocationId)) {
+                    const msg = `**アカウント登録完了**\n氏名:${userName}\n事業所:${officeName}\n割当番号:${allocationId}`;
+                    sendText(msg);
+                } else {
+                    window.alert("未入力の項目があります")
+                }
+
                 return false;
             });
         });
+
+        $('input[name="username"]').focus(function(){
+            $(this).css('border', '1px solid black');
+        });
+
+        $('input[name="allocation-id"]').focus(function(){
+            $(this).css('border', '1px solid black');
+        });
+
+        function inputValidation(userName, allocationId) {
+            let isError = true
+            if (userName == '') {
+                $('input[name="username"]').css('border', '1px solid #FF6464');
+                isError = false
+            }
+            if (allocationId == '') {
+                $('input[name="allocation-id"]').css('border', '1px solid #FF6464');
+                isError = false
+            }
+
+            return isError
+        }
 
         function sendText(text){
             liff.sendMessages([
