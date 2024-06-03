@@ -104,6 +104,7 @@
         const params = (new URL(document.location)).searchParams;
         const key = params.get('key');
 
+        // デフォルト日付を設定
         var today = new Date();
         var year = today.getFullYear();
         var month = ('0' + (today.getMonth() + 1)).slice(-2);
@@ -153,20 +154,24 @@
                 let msg = `**申請完了**\n区分:${category}\n対象日:${dateFormated}`; 
 
                 if (inputValidation(amount, site)) {
-                    if ($('#category').val() == '出張費') {
-                        msg += `\n金額:${amount}\n現場名:${site}`
-                    }
+                    msg += `\n金額:${amount}\n現場名:${site}`
+                    sendText(msg);
                 } else {
                     window.alert("未入力の項目があります")
                     return false
                 }
 
-                sendText(msg);
             });
         });
 
         function inputValidation(amount, site) {
             let isError = true
+
+            if ($('#category').val() != '出張費') {
+                msg += `\n金額:${amount}\n現場名:${site}`
+                return isError
+            }
+
             if (amount == '') {
                 $('#amount').css('border', '1px solid #FF6464');
                 isError = false

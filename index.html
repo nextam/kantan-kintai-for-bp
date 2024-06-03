@@ -33,16 +33,16 @@
                 <input name="location" type="radio" value="移動"> 移動
                 <input name="location" type="radio" value="その他"> その他
             </p>
-            <p id="orp-container" style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">
+            <p id="orp-container" style="color:rgb(0, 0, 0); font-size:16px; margin:5px auto; text-align: left; width:100%;">
                 <input id="is-orp" type="checkbox"> ORP案件
             </p>
         
-            <div style="display: flex; padding:5px; font-size:24px; align-items:left; flex-direction:column;">
+            <div id="contents-container" style="display: flex; padding:5px; font-size:24px; align-items:left; flex-direction:column;">
                 <p style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">目的/作業内容</p>
                 <input id="contents" name="contents" style="width:100%; height:60px; padding:5px; font-size:16px;" required>
             </div>
 
-            <div style="display: flex; padding:5px; font-size:24px; align-items:left; flex-direction:column;">
+            <div id="schedule-container" style="display: flex; padding:5px; font-size:24px; align-items:left; flex-direction:column;">
                 <p style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">明日のスケジュール</p>
                 <input id="schedule" name="schedule" style="width:100%; height:60px; padding:5px; font-size:16px;" required>
             </div>
@@ -100,13 +100,16 @@
         const params = (new URL(document.location)).searchParams;
         const key = params.get('key');
 
-        $('#orp-container').hide();
-
+        $('#orp-container').show();
+        $('#schedule-container').hide();
+                
         $('input[name="clock"]').change(function(){
-            if ($(this).val() === '退勤') {
-                $('#orp-container').show();
+            if ($(this).val() === '出勤') {
+                $('#orp-container').show();       
+                $('#schedule-container').hide();
             } else {
                 $('#orp-container').hide();
+                $('#schedule-container').show();
             }
         });
 
@@ -133,9 +136,11 @@
                 const contents = $('#contents').val();
                 const schedule = $('#schedule').val();
 
-                let msg = `**打刻完了**\n出勤/退勤:${clockStatus}\n時刻:${nowDateTime}\n区分:${locationStatus}\n目的/作業内容:${contents}\n明日のスケジュール:${schedule}`;
+                let msg = `**打刻完了**\n出勤/退勤:${clockStatus}\n時刻:${nowDateTime}\n区分:${locationStatus}\n目的/作業内容:${contents}`;
                     
-                if (inputValidation(contents, schedule)) {
+                if (inputValidation(contents, schedule, clockStatus)) {
+                    msg += clockStatus == '退勤' ? `\n明日のスケジュール:${schedule}` : ''
+
                     if ($('#is-orp').is(':checked')) {
                         msg += `\nORP案件:○`
                     }
@@ -144,17 +149,19 @@
                     return false
                 }
 
+                console.log(msg)
                 sendText(msg);
             });
         });
 
-        function inputValidation(contents, schedule) {
+        function inputValidation(contents, schedule, clockStatus) {
             let isError = true
+
             if (contents == '') {
                 $('#contents').css('border', '1px solid #FF6464');
                 isError = false
             }
-            if (schedule == '') {
+            if (clockStatus == '退勤' && schedule == '') {
                 $('#schedule').css('border', '1px solid #FF6464');
                 isError = false
             }
