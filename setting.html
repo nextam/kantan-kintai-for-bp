@@ -96,7 +96,7 @@
                 const allocationId = $('input[name="allocation-id"]').val();
 
                 if (inputValidation(userName, allocationId)) {
-                    const msg = `**アカウント登録完了**\n氏名:${userName}\n事業所:${officeName}\n割当番号:${allocationId}`;
+                    const msg = `**アカウント登録完了**\n割当番号:${allocationId}\n氏名:${userName}\n事業所:${officeName}`;
                     sendText(msg);
                 } else {
                     window.alert("未入力の項目があります")
