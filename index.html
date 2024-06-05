@@ -7,7 +7,7 @@
     <meta name="robots" content="noindex"> <!-- インデックスさせない設定 -->
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>かんたん勤怠｜NAVver20240601</title>
+    <title>かんたん勤怠｜NAV ver20240605</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rossorigin="anonymous">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css">
@@ -16,35 +16,37 @@
 <body onLoad="setTimeout('closewindow()', 300000)">
 
     <form class="mx-auto">
-        <div class="" style="display: flex; flex-direction: column;">
+        <div class="" style="display: flex; flex-direction: column; padding: 20px;">
             <!-- <div style="display: flex;">
                 <button type="button" id="clock-in-button" style="color: white; background-color: rgb(255, 100, 100); font-weight:900; font-size: 24px; width: 60%; height: 200px; margin:5px 2.5px 15px 0px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(200, 0, 0);">通常出勤</button>
                 <button type="button" id="ouen-clock-in-button" style="color: white; background-color: rgb(255, 120, 0); font-weight:900; font-size: 24px; width: 40%; height: 200px; margin:5px 0px 15px 2.5px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(180, 50, 0);">応援出勤</button>
             </div> -->
-            <p style="color:rgb(0, 0, 0); font-size:16px; margin:5px auto; text-align: left; width:100%;">
-                <input name="clock" type="radio" value="出勤" checked> 出勤
-                <input name="clock" type="radio" value="退勤"> 退勤
+            <p style="color:rgb(0, 0, 0); font-size:24px; margin:10px auto; text-align: left; width:100%;">
+                <input name="clock" type="radio" value="出勤" style="transform:scale(2.5); margin:20px;" checked>出勤
+                <input name="clock" type="radio" value="退勤" style="transform:scale(2.5); margin:20px;" >退勤
             </p>
-            <p style="color:rgb(0, 0, 0); font-size: 16px; margin:5px auto; text-align: left; width:100%;">
-                <input name="location" type="radio" value="事務所" checked> 事務所
-                <input name="location" type="radio" value="現場"> 現場
-                <input name="location" type="radio" value="現調"> 現調
-                <input name="location" type="radio" value="打合せ"> 打合せ
-                <input name="location" type="radio" value="移動"> 移動
-                <input name="location" type="radio" value="その他"> その他
+            <p style="color:rgb(0, 0, 0); font-size: 24px; margin:5px auto; text-align: left; width:100%;">区分</p>
+                <select id="location" name="location" style="width:100%; height:60px; padding:5px; font-size:24px;" required>
+                    <option value="事務所">事務所</option>
+                    <option value="現場">現場</option>
+                    <option value="現調">現調</option>
+                    <option value="打合せ">打合せ</option>
+                    <option value="移動">移動</option>
+                    <option value="その他">その他</option>
+                </select>
             </p>
-            <p id="orp-container" style="color:rgb(0, 0, 0); font-size:16px; margin:5px auto; text-align: left; width:100%;">
-                <input id="is-orp" type="checkbox"> ORP案件
+            <p id="orp-container" style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">
+                <input id="is-orp" type="checkbox" style="transform:scale(2.5); margin:20px;"> ORP案件
             </p>
         
-            <div id="contents-container" style="display: flex; padding:5px; font-size:24px; align-items:left; flex-direction:column;">
+            <div id="contents-container" style="display: flex; font-size:24px; align-items:left; flex-direction:column;">
                 <p style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">目的/作業内容</p>
-                <input id="contents" name="contents" style="width:100%; height:60px; padding:5px; font-size:16px;" required>
+                <input id="contents" name="contents" style="font-size:24px; width:100%; height:60px; padding:5px; font-size:16px;" required>
             </div>
 
-            <div id="schedule-container" style="display: flex; padding:5px; font-size:24px; align-items:left; flex-direction:column;">
+            <div id="schedule-container" style="display: flex; font-size:24px; align-items:left; flex-direction:column;">
                 <p style="color:rgb(0, 0, 0); font-size:24px; margin:5px auto; text-align: left; width:100%;">明日のスケジュール</p>
-                <input id="schedule" name="schedule" style="width:100%; height:60px; padding:5px; font-size:16px;" required>
+                <input id="schedule" name="schedule" style="font-size:24px; width:100%; height:60px; padding:5px; font-size:16px;" required>
             </div>
 
             <button type="button" id="submit-button" style="color: white; background-color: rgb(255, 100, 100); font-weight:900; font-size: 24px; width: 100%; height: 100px; margin-top: 15px; margin-bottom:15px; border:none; border-radius: 10px; box-shadow: 0px 10px rgb(200, 0, 0)">打刻する</button>
@@ -63,7 +65,7 @@
     <script>
         //参考URL https://qiita.com/doikatsuyuki/items/7ee2476977e8bb97e2a7
 
-        const liffId = "2004762752-8b0a5klP"; ////LIFF ID(LINEログイン>LIFF>LIFF ID)
+        const liffId = "2004886307-PrgBx30x"; ////LIFF ID(LINEログイン>LIFF>LIFF ID)
 
         const thisfileURL = location.pathname;
 
@@ -131,8 +133,8 @@
             $('form').submit(function () {
                 const now = new Date(); // 端末時刻を取得
                 const nowDateTime = moment(now).format('YYYY/MM/DD(ddd) HH:mm');
-                const clockStatus = $('input[name="clock"]:checked').val()
-                const locationStatus = $('input[name="location"]:checked').val()
+                const clockStatus = $('input[name="clock"]:checked').val();
+                const locationStatus = $('#location').val();
                 const contents = $('#contents').val();
                 const schedule = $('#schedule').val();
 
